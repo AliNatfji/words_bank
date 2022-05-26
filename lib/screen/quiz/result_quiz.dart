@@ -11,7 +11,15 @@ class ResultQuiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var result =  ( WordBankCubit.get(context).numOfTrueAnswer * 100) / WordBankCubit.get(context).allQuestion ;
+    var  result = (WordBankCubit.get(context).numOfTrueAnswer * 100) / WordBankCubit.get(context).allQuestion;
+    var _result = (result.isNaN || result.isInfinite) ? 0 : result;
+
+    // void result(){
+    //   if (_result.isNaN || _result.isInfinite){
+    //     _result = 0;
+    //   }
+    // }
+
     return BlocConsumer<WordBankCubit, WordBankStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -52,24 +60,22 @@ class ResultQuiz extends StatelessWidget {
                         ? Icons.volunteer_activism
                         : Icons.warning_amber_outlined,
                     size: 200,
-                    color:  cubit.numOfTrueAnswer >= cubit.allQuestion?Colors.blue:Colors.red,
+                    color: cubit.numOfTrueAnswer >= cubit.allQuestion
+                        ? Colors.blue
+                        : Colors.red,
                   ),
                   const SizedBox(
                     height: 60,
                   ),
                   Text(
-                    // cubit.numOfTrueAnswer.toString() +
-                    //     ' / ' +
-                    //     cubit.allQuestion.toString(),
-                    result.toInt().toString() + '%'     ,
+                    _result.toInt().toString() + '%',
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'Correct answers:' +
-                        cubit.numOfTrueAnswer.toString(),
+                    'Correct answers:' + cubit.numOfTrueAnswer.toString(),
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -87,15 +93,13 @@ class ResultQuiz extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                      'All questions:' +
-                          cubit.allQuestion.toString(),
+                  Text('All questions:' + cubit.allQuestion.toString(),
                       style: const TextStyle(fontSize: 20)),
                 ],
               ),
             ),
           );
-        } //heart_broken
-        );
+
+        });
   }
 }

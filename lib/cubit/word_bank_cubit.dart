@@ -208,7 +208,7 @@ class WordBankCubit extends Cubit<WordBankStates> {
 
   void createDataBase() {
     emit(WordBankInitialHomeState());
-    emit(WordBankGetDatabaseLoadingState());
+    //emit(WordBankGetDatabaseLoadingState());
     openDatabase(
       'wordBanks.db',
       version: 1,
@@ -290,7 +290,7 @@ class WordBankCubit extends Cubit<WordBankStates> {
 
 
   Future<void> getWordsDataBase(database , int id) async {
-    emit(WordBankGetDatabaseLoadingState());
+    //emit(WordBankGetDatabaseLoadingState());
     print(newAccount.toString()+'after get');
 
     newAccount = await database.rawQuery('SELECT * FROM wordBanks Where id_user =$id  ');
@@ -527,12 +527,13 @@ class WordBankCubit extends Cubit<WordBankStates> {
   //**************************************BACKUP FOR SERVER FUNCTION *******************************//
 
   getNotesFromServer() async {
+    emit(WordBankGetDatabaseLoadingState());
     var response = await _api.postRequest(linkViewNotes, {
       "id": sharedPref.getString("id_user"),
     });
-    if(response.isNotEmpty) {
+    if(response['data'] != null) {
       for (int i = 0; i < response['data'].length; i++) {
-        insertWordsToDatabase(
+        await insertWordsToDatabase(
             englishWord: response['data'][i]['English_word'].toString(),
             arabicWord: response['data'][i]['Arabic_word'].toString(),
             description: response['data'][i]['Description'] ?? '',
@@ -562,20 +563,17 @@ class WordBankCubit extends Cubit<WordBankStates> {
     );
   }
 
-
-
-  backUp() async {
+  firstBackUp() async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result == true) {
       print(' THERE IS INTERNET ');
       if (newAccount.isEmpty) {
-        //emit(WordBankGetDatabaseLoadingState());
         await getNotesFromServer();
         print(' SQL LITE is EMPTY');
-        //emit(WordBankGetDatabaseState());
+        emit(WordBankGetDatabaseState());
       } else {
-        deleteNotesFromServer();
-        sendNotesToServer();
+        await deleteNotesFromServer();
+        await sendNotesToServer();
         print(' SQL LITE IS NOT EMPTY');
       }
     } else {
@@ -586,9 +584,26 @@ class WordBankCubit extends Cubit<WordBankStates> {
         print('SQL LITE IS NOT EMPTY');
       }
     }
+    print(' THE FIRST BACK UP ');
+
   }
 
+  secondBackUp() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if (result == true) {
+      print(' THERE IS INTERNET ');
+      if (newAccount.isEmpty) {
+         deleteNotesFromServer();
+       // print(' SQL LITE is EMPTY');
+      } else {
+         deleteNotesFromServer();
+        await sendNotesToServer();
+        print(' SQL LITE IS NOT EMPTY');
+      }
+    }
+    print(' THE SECOND BACK UP &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 
+  }
 
 
 //************************************** SNACK BAR FUNCTIONS *******************************//

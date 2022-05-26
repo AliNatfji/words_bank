@@ -29,29 +29,40 @@ class _HomeScreenState extends State<HomeScreen> {
   var descriptionController = TextEditingController();
 
   loading() {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return  Center(
+      child: CircularProgressIndicator(
+        color: WordBankCubit.get(context).color,
+      ),
     );
   }
 
   @override
   void initState() {
+    super.initState();
     WordBankCubit.get(context).getWordsDataBase(
       WordBankCubit.get(context).database,
       int.parse(sharedPref.getString('id_user')!),
     );
-    WordBankCubit.get(context).backUp();
-    super.initState();
+     WordBankCubit.get(context).firstBackUp();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WordBankCubit, WordBankStates>(
       listener: (context, state) {
-        // if(state is WordBankGetDatabaseState )
-        //   {
-        //     Timer(Duration(seconds: 3),  WordBankCubit.get(context).backUp());
-        //   }
+        if(state is WordBankInsertDatabaseState )
+          {
+            WordBankCubit.get(context).secondBackUp();
+          }
+        if(state is WordBankDeleteDatabaseState )
+          {
+            WordBankCubit.get(context).secondBackUp();
+          }
+        if(state is WordBankGetDatabaseLoadingState )
+          {
+            loading();
+          }
+
       },
       builder: (context, state) {
         List list1 = WordBankCubit.get(context).newAccount;
@@ -73,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   ),
             // ],
           ),
-          body: wordBankBuilder(cubitIndex: list1),
+          body: (state is WordBankGetDatabaseLoadingState )?loading():wordBankBuilder(cubitIndex: list1),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (cubit.isBottomSheetShow) {

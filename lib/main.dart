@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
         return BlocProvider(
       create: (BuildContext context) => WordBankCubit()
         //..checkColor()
-        ..createDataBase()
-        ..initPlatformState(),
+        ..createDataBase(),
+        //..initPlatformState(),
       child: BlocConsumer<WordBankCubit, WordBankStates>(
         listener: (context, state) {},
         builder: (context, state) {
