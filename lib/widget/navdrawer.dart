@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:share/share.dart';
 import 'package:words_bank/widget/utils.dart';
 import '../main.dart';
@@ -107,7 +106,7 @@ class _NavDarState extends State<NavDar> {
                                             .color, //HexColor('#E7734D'),
                                       ),
                                       child: const Text(
-                                        'Okay',
+                                        'OK',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -251,11 +250,11 @@ class _NavDarState extends State<NavDar> {
             ],
             onColorChanged: (_color) {
               WordBankCubit.get(context).changeColors(_color);
-             //sharedPref.setString('color', _color.toString());
+              sharedPref.setString('color', _color.toString());
               // print('************************');
               // print(sharedPref.getString('color'));
               // print('************************');
-            //WordBankCubit.get(context).saveColor(sharedPref.getString('color')!);
+             WordBankCubit.get(context).saveColor(sharedPref.getString('color').toString());
             }),
       );
 

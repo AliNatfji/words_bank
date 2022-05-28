@@ -132,90 +132,89 @@ BuildQuestion(model1, model2, model3, model4, context) {
 }
 
 Widget buildWordBankItem(model, context) => Dismissible(
-      key: UniqueKey(),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: InkWell(
-          onTap: () {
-            navigatorTo(
-              context,
-              EditScreen(
-                id: model['id'].toString(),
-                english: model['englishWord'].toString(),
-                arabic: model['arabicWord'].toString(),
-                description: model['description'].toString(),
-              ),
-            );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor, // Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              boxShadow: [
-                BoxShadow(
-                  color: WordBankCubit.get(context)
-                      .color
-                      .withOpacity(0.2), //Theme.of(context).shadowColor,
-                  spreadRadius: 5.0,
-                  blurRadius: 5.0,
-                ),
-              ],
+    key: UniqueKey(),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: InkWell(
+        onTap: () {
+          navigatorTo(
+            context,
+            EditScreen(
+              id: model['id'].toString(),
+              english: model['englishWord'].toString(),
+              arabic: model['arabicWord'].toString(),
+              description: model['description'].toString(),
             ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${model['englishWord']}'.length > 10
-                          ? '${model['englishWord']}'.substring(0, 10) + '...'
-                          : '${model['englishWord']}',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const Icon(
-                      Icons.compare_arrows,
-                      size: 35.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        '${model['arabicWord']}'.length > 10
-                            ? '${model['arabicWord']}'.substring(0, 10) + '...'
-                            : '${model['arabicWord']}',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 10.0, right: 10.0, left: 10.0),
-                  child: Text(
-                    '${model['description']}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor, // Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+            boxShadow: [
+              BoxShadow(
+                color: WordBankCubit.get(context)
+                    .color
+                    .withOpacity(0.2), //Theme.of(context).shadowColor,
+                spreadRadius: 5.0,
+                blurRadius: 5.0,
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '${model['englishWord']}'.length > 10
+                        ? '${model['englishWord']}'.substring(0, 10) + '...'
+                        : '${model['englishWord']}',
                     style: Theme.of(context).textTheme.headline6,
                   ),
+                  const Icon(
+                    Icons.compare_arrows,
+                    size: 35.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      '${model['arabicWord']}'.length > 10
+                          ? '${model['arabicWord']}'.substring(0, 10) + '...'
+                          : '${model['arabicWord']}',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 10.0, right: 10.0, left: 10.0),
+                child: Text(
+                  '${model['description']}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-      onDismissed: (direction) {
-        WordBankCubit.get(context).deleteData(id: model['id']);
-        WordBankCubit.get(context).showSnackBarWithAction(
-            context, 'Deleted successfully', 'Undo', () {
-              WordBankCubit.get(context).insertWordsToDatabase(
-              englishWord: model['englishWord'],
-              arabicWord: model['arabicWord'].toString(),
-              description: model['description'].toString(),
-              idUser: model['id_user']);
-        });
-      },
-    );
+    ),
+    onDismissed: (direction) {
+      var cubit = WordBankCubit.get(context);
+      cubit.deleteData(id: model['id']);
+      cubit.showSnackBarWithAction(context, 'Deleted successfully', 'Undo', () {
+        cubit.insertWordsToDatabase(
+            englishWord: model['englishWord'].toString(),
+            arabicWord: model['arabicWord'].toString(),
+            description: model['description'].toString(),
+            idUser: model['id_user']);
+      });
+    });
 
 Widget wordBankBuilder({
   required List<dynamic> cubitIndex,

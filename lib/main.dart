@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:words_bank/screen/splash_screen.dart';
 import 'package:words_bank/shared/bloc_observer.dart';
-import 'package:words_bank/widget/colors.dart';
 import 'cubit/word_bank_cubit.dart';
 import 'cubit/word_bank_state.dart';
 
@@ -14,26 +12,26 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
 
-  bool? isDark = sharedPref.getBool('isDark');
+ // bool? isDark = sharedPref.getBool('isDark');
 
   BlocOverrides.runZoned(
-    () => runApp(MyApp()),
+    () => runApp(const MyApp()),
     blocObserver: MyBlocObserver(),
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-        return BlocProvider(
+    return BlocProvider(
       create: (BuildContext context) => WordBankCubit()
-        //..checkColor()
-        ..createDataBase(),
-        //..initPlatformState(),
+        ..createDataBase()
+        ..checkColor()
+        ..initPlatformState(),
       child: BlocConsumer<WordBankCubit, WordBankStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -41,12 +39,14 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch : Colors.grey,//WordBankCubit.get(context).color,//colorCustom,
-              primaryColor:WordBankCubit.get(context).color,//colorCustom,
+              primarySwatch: Colors.grey,
+              //WordBankCubit.get(context).color,//colorCustom,
+              primaryColor: WordBankCubit.get(context).color,
+              //colorCustom,
               canvasColor: Colors.white,
               //shadowColor: colorCustom.withOpacity(0.15),//Colors.indigo.withOpacity(0.2),
               scaffoldBackgroundColor: Colors.white,
-              appBarTheme:  AppBarTheme(
+              appBarTheme: AppBarTheme(
                 color: _color,
                 titleTextStyle: const TextStyle(
                   color: Colors.white,
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                 iconTheme: const IconThemeData(
                   color: Colors.white,
                 ),
-             ),
+              ),
               textTheme: const TextTheme(
                 headline6: TextStyle(
                   color: Colors.black,
@@ -80,10 +80,10 @@ class MyApp extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              iconTheme:  IconThemeData(
+              iconTheme: IconThemeData(
                 color: _color,
               ),
-              floatingActionButtonTheme:FloatingActionButtonThemeData(
+              floatingActionButtonTheme: FloatingActionButtonThemeData(
                 backgroundColor: WordBankCubit.get(context).color,
                 foregroundColor: Colors.white,
               ),
@@ -92,7 +92,6 @@ class MyApp extends StatelessWidget {
                 selectedItemColor: Colors.white,
                 unselectedItemColor: Colors.white,
                 //selectedIconTheme: IconThemeData(color: Colors.lightGreen,),
-
               ),
             ),
             // darkTheme: ThemeData(
@@ -153,4 +152,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

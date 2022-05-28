@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import '../cubit/word_bank_cubit.dart';
 import '../widget/components.dart';
 import 'edit_screen.dart';

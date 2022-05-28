@@ -5,7 +5,6 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sqflite/sqflite.dart';
 import '../main.dart';
 import '../screen/home_screen.dart';
-import '../screen/login_screen.dart';
 import '../screen/otp_screen.dart';
 import '../shared/api.dart';
 import '../shared/constant.dart';
@@ -25,160 +24,181 @@ class WordBankCubit extends Cubit<WordBankStates> {
 
   //**************************************Colors FUNCTIONS *******************************//
 
-    Color  color  = Colors.indigoAccent;
-
-  // void  checkColor(){
-  //   if (sharedPref.getString('color') == null)
-  //   {
-  //      color = Colors.indigoAccent;
-  //   }
-  //   else
-  //   {
-  //     saveColor(sharedPref.getString('color').toString());//return color = Colors.black;//sharedPref.getString('color') as Color;
-  //   }
-  // }
-  //
-  //
-  // void saveColor(String numColor) {
-  //   switch (numColor) {
-  //     case "MaterialColor(primary value: Color(0xffffc107))":
-  //       {
-  //         color =  Colors.amber;
-  //         print('1');
-  //       }
-  //       break;
-  //     case  "MaterialColor(primary value: Color(0xffff9800))":
-  //       {
-  //         color =    Colors.orange;
-  //         print('2');
-  //       }
-  //       break;
-  //     case "MaterialAccentColor(primary value: Color(0xffff6e40))":
-  //       {
-  //         color =  Colors.deepOrange;
-  //         print('3');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xffff5722))":
-  //       {
-  //         color = Colors.deepOrangeAccent;
-  //         print('4');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xfff44336))":
-  //       {
-  //         color =  Colors.red;
-  //         print('5');
-  //       }
-  //       break;
-  //
-  //     case "MaterialAccentColor(primary value: Color(0xffff4081))":
-  //       {
-  //         color =  Colors.pinkAccent;
-  //         print('6');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xffe91e63))":
-  //       {
-  //         color =   Colors.pink;
-  //         print('7');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff9c27b0))":
-  //       {
-  //         color =  Colors.purple;
-  //         print('8');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff673ab7))":
-  //       {
-  //         color = Colors.deepPurple;
-  //         print('9');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff7c4dff))":
-  //       {
-  //         color =  Colors.deepPurpleAccent;
-  //         print('10');
-  //       }
-  //       break;
-  //
-  //
-  //     case "MaterialColor(primary value: Color(0xff3f51b5))":
-  //       {
-  //         color =  Colors.indigo;
-  //         print('11');
-  //       }
-  //       break;
-  //     case  "MaterialColor(primary value: Color(0xff2196f3))":
-  //       {
-  //         color =    Colors.blue;
-  //         print('12');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff03a9f4))":
-  //       {
-  //         color =  Colors.lightBlue;
-  //         print('13');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff00bcd4))":
-  //       {
-  //         color = Colors.cyan;
-  //         print('14');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff009688))":
-  //       {
-  //         color =  Colors.teal;
-  //         print('15');
-  //       }
-  //       break;
-  //
-  //
-  //     case "MaterialColor(primary value: Color(0xff4caf50))":
-  //       {
-  //         color =  Colors.green;
-  //         print('16');
-  //       }
-  //       break;
-  //     case  "MaterialColor(primary value: Color(0xff8bc34a))":
-  //       {
-  //         color =    Colors.lightGreen;
-  //         print('17');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff795548))":
-  //       {
-  //         color =  Colors.brown;
-  //         print('18');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff9e9e9e))":
-  //       {
-  //         color = Colors.grey;
-  //         print('19');
-  //       }
-  //       break;
-  //     case "MaterialColor(primary value: Color(0xff607d8b))":
-  //       {
-  //         color =  Colors.blueGrey;
-  //         print('20');
-  //       }
-  //       break;
-  //     default: {
-  //       color =  Colors.indigo;
-  //     }
-  //     break;
-  //   }
-  // }
-
+    late Color  color ;
 
   void changeColors(Color color){
 
     this.color =color;
     emit(ColorsState());
   }
+
+  void  checkColor(){
+    if (sharedPref.getString('color') == null)
+    {
+       color = Colors.indigoAccent;
+    }
+    else
+    {
+      saveColor(sharedPref.getString('color').toString());//return color = Colors.black;//sharedPref.getString('color') as Color;
+    }
+  }
+
+
+  void saveColor(numColor) {
+    switch (numColor) {
+      case "ColorSwatch(primary value: Color(0xffffc107))":
+     // case "MaterialColor(primary value: Color(0xffffc107))":
+        {
+          color =  Colors.amber;
+          print('1');
+        }
+        break;
+      case  "ColorSwatch(primary value: Color(0xffff9800))":
+     // case  "MaterialColor(primary value: Color(0xffff9800))":
+        {
+          color =    Colors.orange;
+          print('2');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xffff6e40))":
+     // case "MaterialAccentColor(primary value: Color(0xffff6e40))":
+        {
+          color =  Colors.deepOrange;
+          print('3');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xffff5722))":
+      //case "MaterialColor(primary value: Color(0xffff5722))":
+        {
+          color = Colors.deepOrangeAccent;
+          print('4');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xfff44336))":
+     // case "MaterialColor(primary value: Color(0xfff44336))":
+        {
+          color =  Colors.red;
+          print('5');
+        }
+        break;
+
+      case "ColorSwatch(primary value: Color(0xffff4081))":
+    //  case "MaterialAccentColor(primary value: Color(0xffff4081))":
+        {
+          color =  Colors.pinkAccent;
+          print('6');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xffe91e63))":
+      //case "MaterialColor(primary value: Color(0xffe91e63))":
+        {
+          color =   Colors.pink;
+          print('7');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff9c27b0))":
+     // case "MaterialColor(primary value: Color(0xff9c27b0))":
+        {
+          color =  Colors.purple;
+          print('8');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff673ab7))":
+     // case "MaterialColor(primary value: Color(0xff673ab7))":
+        {
+          color = Colors.deepPurple;
+          print('9');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff7c4dff))":
+      //case "MaterialAccentColor(primary value: Color(0xff7c4dff))":
+        {
+          color =  Colors.deepPurpleAccent;
+          print('10');
+        }
+        break;
+
+
+      case "ColorSwatch(primary value: Color(0xff3f51b5))":
+     // case "MaterialColor(primary value: Color(0xff3f51b5))":
+        {
+          color =  Colors.indigo;
+          print('11');
+        }
+        break;
+      case  "ColorSwatch(primary value: Color(0xff2196f3))":
+     // case  "MaterialColor(primary value: Color(0xff2196f3))":
+        {
+          color =    Colors.blue;
+          print('12');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff03a9f4))":
+      //case "MaterialColor(primary value: Color(0xff03a9f4))":
+        {
+          color =  Colors.lightBlue;
+          print('13');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff00bcd4))":
+     // case "MaterialColor(primary value: Color(0xff00bcd4))":
+        {
+          color = Colors.cyan;
+          print('14');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff009688))":
+     // case "MaterialColor(primary value: Color(0xff009688))":
+        {
+          color =  Colors.teal;
+          print('15');
+        }
+        break;
+
+
+      case "ColorSwatch(primary value: Color(0xff4caf50))":
+      //case "MaterialColor(primary value: Color(0xff4caf50))":
+        {
+          color =  Colors.green;
+          print('16');
+        }
+        break;
+      case  "ColorSwatch(primary value: Color(0xff8bc34a))":
+     // case  "MaterialColor(primary value: Color(0xff8bc34a))":
+        {
+          color =    Colors.lightGreen;
+          print('17');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff795548))":
+     // case "MaterialColor(primary value: Color(0xff795548))":
+        {
+          color =  Colors.brown;
+          print('18');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff9e9e9e))":
+     // case "MaterialColor(primary value: Color(0xff9e9e9e))":
+        {
+          color = Colors.grey;
+          print('19');
+        }
+        break;
+      case "ColorSwatch(primary value: Color(0xff607d8b))":
+        {
+          color =  Colors.blueGrey;
+          print('20');
+        }
+        break;
+      default: {
+        color =  Colors.orange;
+      }
+      break;
+    }
+  }
+
+
+
 
   //**************************************SQLITE FUNCTIONS *******************************//
 
@@ -291,20 +311,20 @@ class WordBankCubit extends Cubit<WordBankStates> {
 
   Future<void> getWordsDataBase(database , int id) async {
     //emit(WordBankGetDatabaseLoadingState());
-    print(newAccount.toString()+'after get');
+   // print(newAccount.toString()+'after get');
 
     newAccount = await database.rawQuery('SELECT * FROM wordBanks Where id_user =$id  ');
 
-    for (var i = 0; i <newAccount.length ; i++)
-    {
-      Word2sId.add(newAccount[i]['id']);
-
-      Word2sE.add(newAccount[i]['englishWord']);
-
-      Word2sA.add(newAccount[i]['arabicWord']);
-
-      worddescription.add(newAccount[i]['description']);
-    }
+    // for (var i = 0; i <newAccount.length ; i++)
+    // {
+    //   Word2sId.add(newAccount[i]['id']);
+    //
+    //   Word2sE.add(newAccount[i]['englishWord']);
+    //
+    //   Word2sA.add(newAccount[i]['arabicWord']);
+    //
+    //   worddescription.add(newAccount[i]['description']);
+    // }
 
     emit(WordBankGetDatabaseState());
 
@@ -601,7 +621,7 @@ class WordBankCubit extends Cubit<WordBankStates> {
         print(' SQL LITE IS NOT EMPTY');
       }
     }
-    print(' THE SECOND BACK UP &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    print(' THE SECOND BACK UP ');
 
   }
 

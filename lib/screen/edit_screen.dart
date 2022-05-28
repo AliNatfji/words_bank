@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import '../cubit/word_bank_cubit.dart';
 import '../cubit/word_bank_state.dart';
 
@@ -109,9 +108,9 @@ class EditScreen extends StatelessWidget {
 
                         ),
                       ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(' Description :', style: TextStyle(fontSize: 20,color: HexColor('#000814')),),
+                        const Padding(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text(' Description :', style: TextStyle(fontSize: 20,color: Colors.black),),
                         ),
                       ]
                     ),
