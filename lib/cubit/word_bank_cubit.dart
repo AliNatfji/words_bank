@@ -191,7 +191,7 @@ class WordBankCubit extends Cubit<WordBankStates> {
         }
         break;
       default: {
-        color =  Colors.orange;
+        color =  Colors.indigoAccent;
       }
       break;
     }
@@ -253,11 +253,6 @@ class WordBankCubit extends Cubit<WordBankStates> {
       },
       onOpen: (database)
       {
-        // if(sharedPref.getString('id_user') != null)
-         //{
-           //getWordsDataBase(database,int.parse(sharedPref.getString('id_user')!),);
-           //backUp();
-        // }
         print('database opened ');
       },
     ).then((value) {
@@ -310,23 +305,36 @@ class WordBankCubit extends Cubit<WordBankStates> {
 
 
   Future<void> getWordsDataBase(database , int id) async {
-    //emit(WordBankGetDatabaseLoadingState());
-   // print(newAccount.toString()+'after get');
+    emit(WordBankGetDatabaseLoadingState());
+    print(newAccount.toString()+'after get');
 
     newAccount = await database.rawQuery('SELECT * FROM wordBanks Where id_user =$id  ');
 
-    // for (var i = 0; i <newAccount.length ; i++)
-    // {
-    //   Word2sId.add(newAccount[i]['id']);
-    //
-    //   Word2sE.add(newAccount[i]['englishWord']);
-    //
-    //   Word2sA.add(newAccount[i]['arabicWord']);
-    //
-    //   worddescription.add(newAccount[i]['description']);
-    // }
+    for (int i = 0; i <newAccount.length ; i++)
+    {
+      if(Word2sE!=newAccount[i]['englishWord'])
+      {
+        Word2sId.add(newAccount[i]['id']);
 
+        Word2sE.add(newAccount[i]['englishWord']);
+
+        Word2sA.add(newAccount[i]['arabicWord']);
+
+        worddescription.add(newAccount[i]['description']);
+      }
+
+    }
+    
+    print(Word2sE.toString()+'EEEEEEEE'+Word2sA.toString()+'aaaaaaaaaaaaa');
+
+    print(newAccount.toString());
     emit(WordBankGetDatabaseState());
+
+    // Word2sId=[];
+    // Word2sE=[];
+    // Word2sA=[];
+    // worddescription=[];
+    // print(Word2sE.toString()+'EEEEEEEE'+Word2sA.toString()+'aaaaaaaaaaaaa');
 
   }
 
@@ -669,12 +677,12 @@ class WordBankCubit extends Cubit<WordBankStates> {
     emit(AppChangeBottomSheetStates());
   }
 
-  IconData suffix = Icons.visibility_outlined;
-  bool isPassword = true;
+  IconData suffix = Icons.visibility_off_outlined;
+  bool isPassword = false;
 
   void changePasswordVisibility() {
     isPassword = !isPassword;
-    suffix = isPassword ? (Icons.visibility_outlined) : Icons.visibility_off_outlined;
+    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ChangePasswordVisibilityState());
   }
 

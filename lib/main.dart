@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:words_bank/screen/login2.dart';
 import 'package:words_bank/screen/splash_screen.dart';
 import 'package:words_bank/shared/bloc_observer.dart';
 import 'cubit/word_bank_cubit.dart';
@@ -11,8 +12,6 @@ late SharedPreferences sharedPref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
-
- // bool? isDark = sharedPref.getBool('isDark');
 
   BlocOverrides.runZoned(
     () => runApp(const MyApp()),
@@ -144,7 +143,8 @@ class MyApp extends StatelessWidget {
             // themeMode: WordBankCubit.get(context).isDark
             //     ? ThemeMode.dark
             //     : ThemeMode.light,
-            home: const SplashScreen(),
+          //  home: const SplashScreen(),
+            home: const LoginScreen2(),
             //home: const PickerColors(),
           );
         },

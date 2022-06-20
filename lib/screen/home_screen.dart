@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var descriptionController = TextEditingController();
 
   loading() {
-    return  Center(
+    return Center(
       child: CircularProgressIndicator(
         color: WordBankCubit.get(context).color,
       ),
@@ -43,26 +43,22 @@ class _HomeScreenState extends State<HomeScreen> {
       WordBankCubit.get(context).database,
       int.parse(sharedPref.getString('id_user')!),
     );
-     WordBankCubit.get(context).firstBackUp();
+    WordBankCubit.get(context).firstBackUp();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WordBankCubit, WordBankStates>(
       listener: (context, state) {
-        if(state is WordBankInsertDatabaseState )
-          {
-            WordBankCubit.get(context).secondBackUp();
-          }
-        if(state is WordBankDeleteDatabaseState )
-          {
-            WordBankCubit.get(context).secondBackUp();
-          }
-        if(state is WordBankGetDatabaseLoadingState )
-          {
-            loading();
-          }
-
+        if (state is WordBankInsertDatabaseState) {
+          WordBankCubit.get(context).secondBackUp();
+        }
+        if (state is WordBankDeleteDatabaseState) {
+          WordBankCubit.get(context).secondBackUp();
+        }
+        if (state is WordBankGetDatabaseLoadingState) {
+          loading();
+        }
       },
       builder: (context, state) {
         List list1 = WordBankCubit.get(context).newAccount;
@@ -73,18 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             centerTitle: true,
             title: const Text('Words Bank'),
-            // actions: [
-            //   IconButton(
-            //     onPressed: () {
-            //       showSearch(
-            //           context: context,
-            //           delegate: WordSearch(cubit.Word2sE, cubit.Word2sA));
-            //     },
-            //     icon: const Icon(Icons.search),
-            //   ),
-            // ],
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showSearch(
+                      context: context,
+                      delegate: WordSearch(cubit.Word2sE, cubit.Word2sA));
+                },
+                icon: const Icon(Icons.hail),
+              ),
+            ],
           ),
-          body: (state is WordBankGetDatabaseLoadingState )?loading():wordBankBuilder(cubitIndex: list1),
+          body: (state is WordBankGetDatabaseLoadingState)
+              ? loading()
+              : wordBankBuilder(cubitIndex: list1),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (cubit.isBottomSheetShow) {

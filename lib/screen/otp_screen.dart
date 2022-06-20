@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:words_bank/screen/home_screen.dart';
 import '../cubit/word_bank_cubit.dart';
 import '../cubit/word_bank_state.dart';
 import '../widget/components.dart';
@@ -137,7 +138,7 @@ class OtpScreen extends StatelessWidget {
         }
         if (state is EmailSubmitted) {
           Navigator.pop(context);
-          navigatorFinish(context, const LoginScreen()) ;
+          navigatorFinish(context, const HomeScreen()) ;
         }
 
         if (state is ErrorOccurred) {

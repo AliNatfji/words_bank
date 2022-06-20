@@ -1,9 +1,11 @@
 import 'package:buildcondition/buildcondition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:words_bank/screen/home_screen.dart';
 import '../../widget/components.dart';
 import '../cubit/word_bank_cubit.dart';
 import '../cubit/word_bank_state.dart';
+import '../main.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -128,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     primary: color,//HexColor('#E7734D'),
                                   ),
                                   onPressed: () async {
-                                      if (formKey.currentState!.validate()) {
+                                    if (formKey.currentState!.validate()) {
                                       await cubit.login(
                                         context,
                                         emailController,
@@ -170,6 +172,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               child:  Text(
                                 'register',
+                                style: TextStyle(color:color),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                sharedPref.setString('id_user','-1');
+
+                                navigatorTo(
+                                  context,
+                                  const HomeScreen(),
+                                );
+                              },
+                              child:  Text(
+                                'home',
                                 style: TextStyle(color:color),
                               ),
                             ),

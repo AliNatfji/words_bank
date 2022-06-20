@@ -8,11 +8,10 @@ const String linkLogin = "$linkServerName/auth/login.php";
 
 const String linkOtp = "$linkServerName/auth/email-verification.php";
 
+//const String linkLoginGoogle = "$linkServerName/auth/google.php";
 
-const String linkLoginGoogle = "$linkServerName/auth/google.php";
 
-
-//Notes
+//words
 const String linkInsertNotes = "$linkServerName/words/insert.php";
 
 const String linkViewNotes = "$linkServerName/words/view.php";
