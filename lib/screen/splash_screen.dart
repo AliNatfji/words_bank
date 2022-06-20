@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:words_bank/shared/google_sheets_api.dart';
 import '../main.dart';
 import '../widget/components.dart';
 import 'home_screen.dart';
@@ -17,6 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startTime();
+    //GoogleSheetsApi.init();
   }
 
   @override

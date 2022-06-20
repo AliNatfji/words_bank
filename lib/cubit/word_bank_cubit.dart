@@ -324,7 +324,9 @@ class WordBankCubit extends Cubit<WordBankStates> {
       }
 
     }
-    
+
+
+
     print(Word2sE.toString()+'EEEEEEEE'+Word2sA.toString()+'aaaaaaaaaaaaa');
 
     print(newAccount.toString());
@@ -337,6 +339,8 @@ class WordBankCubit extends Cubit<WordBankStates> {
     // print(Word2sE.toString()+'EEEEEEEE'+Word2sA.toString()+'aaaaaaaaaaaaa');
 
   }
+
+
 
 
 

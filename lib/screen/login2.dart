@@ -6,6 +6,7 @@ import '../../widget/components.dart';
 import '../cubit/word_bank_cubit.dart';
 import '../cubit/word_bank_state.dart';
 import '../main.dart';
+import '../shared/google_sheets_api.dart';
 import 'register_screen.dart';
 
 class LoginScreen2 extends StatefulWidget {
@@ -217,9 +218,8 @@ class _LoginScreenState extends State<LoginScreen2> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async{
                             sharedPref.setString('id_user', '-1');
-
                             navigatorTo(
                               context,
                               const HomeScreen(),

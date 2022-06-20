@@ -16,6 +16,7 @@ class WordSearch extends SearchDelegate {
           onPressed: () {
             query = '';
             WordBankCubit.get(context).changelang();
+
           },
           child: Text(
             WordBankCubit.get(context).isEn ? 'En' : 'Ar',
@@ -40,11 +41,11 @@ class WordSearch extends SearchDelegate {
     return IconButton(
       onPressed: () {
         query = '';
+        //close(context, query);
 
         navigatorTo(context, const HomeScreen());
         close(context, query);
-        var suggestionsA="";
-        // close(context, result!);
+
       },
       icon: const Icon(
         Icons.arrow_back,
